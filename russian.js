@@ -29,7 +29,7 @@
 
 			if ( mod10 === 1 && mod100 !== 11 ) {
 				type = "one";
-			} else if ( ( mod10 === 2 || mod10 === 3 || mod10 === 4 ) && !( mod100 !== 12 || mod100 !== 13 || mod100 !== 14 ) ) {
+			} else if ( ( mod10 === 2 || mod10 === 3 || mod10 === 4 ) && !( mod100 === 12 || mod100 === 13 || mod100 === 14 ) ) {
 				type = "few";
 			} else if ( mod10 === 0 || mod10 === 5 || mod10 === 6 || mod10 === 7 || mod10 === 8 || mod10 === 9 || mod100 === 11 || mod100 === 12 || mod100 === 13 || mod100 === 14 ) {
 				type = "many";

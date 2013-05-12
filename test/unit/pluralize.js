@@ -61,10 +61,14 @@ new function () {
 		var arr = [ 1, 3, 5 ];
 
 		arr.forEach(function( item, i ) {
-			var need = variants[ i ];
+			var vars = variants.slice( 0 ),
+				need = variants[ i ];
+
+			vars.unshift( item );
+
 			equal(
-				Russian.pluralize( item, variants ), need,
-				"Russian.pluralize( " + item + ", variants ) => " + need);
+				Russian.pluralize.apply( this, vars ), need,
+				"Russian.pluralize( " + vars[ 0 ] + ", '" + vars.slice( 1 ).join( "', '" ) + "' ) => " + need);
 		});
 	});
 
@@ -116,9 +120,5 @@ new function () {
 		equal(
 			Russian.pluralize( { 1: "one" }, variants ), "",
 			"Object first argument return empty string");
-
-		equal(
-			Russian.pluralize( 2, [ 'вещь', 'вещи', 'вещей' ]), 'вещи',
-			"Russian.pluralize( 2, [ 'вещь', 'вещи', 'вещей' ]) - If you call pluralize with unknown array (not variable) second argument");
 	});
 };

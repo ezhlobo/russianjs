@@ -1,80 +1,82 @@
 (function( window ) {
 
-	var
-		Russian = function() {
-			var root = this;
+	var Russian, Pluralize, isArray;
 
-			root.p = root.pluralize = new Pluralize();
+	isArray = Array.isArray || function( o ) {
+		return o && Object.prototype.toString.call( o ) === "[object Array]";
+	};
 
-			return root;
-		},
+	Russian = function() {
+		var root = this;
 
-		isArray = Array.isArray || function( o ) {
-			return o && Object.prototype.toString.call( o ) === "[object Array]";
-		},
+		root.p = root.pluralize = new Pluralize();
 
-		Pluralize = function() {
-			var
-				pluralize = function( number ) {
-					var type, variants_arr, variants_hash, mod10, mod100;
+		return root;
+	};
 
-					if ( isArray( number ) ) {
-						var result = [],
-							variants = [].slice.call( arguments, 1 )[ 0 ],
-							i = 0,
-							l = number.length;
+	Pluralize = function() {
+		var pluralize;
 
-						// Is array empty? (simple check)
-						if ( l === 0 ) {
-							return "";
-						}
+		pluralize = function( number ) {
+			var type, variants_arr, variants_hash, mod10, mod100;
 
-						for ( ; i < l; i++ ) {
-							var newArguments = [ variants ];
-							newArguments.unshift( number[ i ] );
+			if ( isArray( number ) ) {
+				var result = [],
+					variants = [].slice.call( arguments, 1 )[ 0 ],
+					i = 0,
+					l = number.length;
 
-							result.push( this.pluralize.apply( this, newArguments ) );
-						}
+				// Is array empty? (simple check)
+				if ( l === 0 ) {
+					return "";
+				}
 
-						return result;
-					}
+				for ( ; i < l; i++ ) {
+					var newArguments = [ variants ];
+					newArguments.unshift( number[ i ] );
 
-					number = parseFloat( number );
+					result.push( pluralize.apply( this, newArguments ) );
+				}
 
-					if ( !number && number !== 0 ) {
-						return "";
-					}
+				return result;
+			}
 
-					variants_arr = isArray( arguments[ 1 ] ) ? arguments[ 1 ] : [].slice.call( arguments, 1 );
-					variants_hash = pluralizationVariants2Hash( variants_arr );
+			number = parseFloat( number );
 
-					mod10 = number % 10;
-					mod100 = number % 100;
+			if ( !number && number !== 0 ) {
+				return "";
+			}
 
-					if ( mod10 === 1 && mod100 !== 11 ) {
-						type = "one";
-					} else if ( ( mod10 === 2 || mod10 === 3 || mod10 === 4 ) && !( mod100 === 12 || mod100 === 13 || mod100 === 14 ) ) {
-						type = "few";
-					} else if ( mod10 === 0 || mod10 === 5 || mod10 === 6 || mod10 === 7 || mod10 === 8 || mod10 === 9 || mod100 === 11 || mod100 === 12 || mod100 === 13 || mod100 === 14 ) {
-						type = "many";
-					} else {
-						type = "other";
-					}
+			variants_arr = isArray( arguments[ 1 ] ) ? arguments[ 1 ] : [].slice.call( arguments, 1 );
+			variants_hash = pluralize.toHash( variants_arr );
 
-					return variants_hash[ type ] || "";
-				},
+			mod10 = number % 10;
+			mod100 = number % 100;
 
-				pluralizationVariants2Hash = function( variants ) {
-					return {
-						"one": variants[ 0 ],
-						"few": variants[ 1 ],
-						"many": variants[ 2 ],
-						"other": variants[ 3 ]
-					};
-				};
+			if ( mod10 === 1 && mod100 !== 11 ) {
+				type = "one";
+			} else if ( ( mod10 === 2 || mod10 === 3 || mod10 === 4 ) && !( mod100 === 12 || mod100 === 13 || mod100 === 14 ) ) {
+				type = "few";
+			} else if ( mod10 === 0 || mod10 === 5 || mod10 === 6 || mod10 === 7 || mod10 === 8 || mod10 === 9 || mod100 === 11 || mod100 === 12 || mod100 === 13 || mod100 === 14 ) {
+				type = "many";
+			} else {
+				type = "other";
+			}
 
-			return pluralize;
+			return variants_hash[ type ] || "";
 		};
+
+		pluralize.toHash = function( variants ) {
+			return {
+				"one": variants[ 0 ],
+				"few": variants[ 1 ],
+				"many": variants[ 2 ],
+				"other": variants[ 3 ]
+			};
+		};
+
+		return pluralize;
+	};
 
 	window.Russian = new Russian();
 

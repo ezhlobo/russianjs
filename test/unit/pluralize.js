@@ -72,6 +72,34 @@ new function () {
 		});
 	});
 
+	test( "Array first argument", function() {
+		var r = variants;
+
+		equal(
+			Array.isArray( Russian.pluralize( [ 1 ], variants ) ), true,
+			"Return right type if array has numbers: Array");
+
+		equal(
+			typeof Russian.pluralize( [], variants ), "string",
+			"Return right type if array is empty: String");
+
+		deepEqual(
+			Russian.pluralize( [], variants ), "",
+			"Empty array first argument return empty string");
+
+		deepEqual(
+			Russian.pluralize( [ 1, 3.14, 5, 3], variants ), [ r[ 0 ], r[ 3 ], r[ 2 ], r[ 1 ] ],
+			"Return right array");
+
+		deepEqual(
+			Russian.pluralize( [ [ 1, 3.14, 5, 3 ], 1, 3.14, 5, 3], variants ), [ [ r[0], r[3], r[2], r[1] ], r[0], r[3], r[2], r[1] ],
+			"Support arrays in arrays: [ [number], number, number ]");
+
+		deepEqual(
+			Russian.pluralize( [ [ [ 1 ], 5 ], [ 3.14 ], [ 5 ], [ 3 ] ], variants ), [ [ [r[0]], r[2] ], [ r[3] ], [ r[2] ], [ r[1] ] ],
+			"Advanced support arrays in arrays: [ [ [number], number ], [number], [number] ]");
+	});
+
 	test( "Funny tests", function() {
 		equal(
 			Russian.pluralize(), "",

@@ -3,7 +3,7 @@
 
 	var
 		Russian = function() {
-			this.p = this.pluralize = pluralize;
+			this.p = this.pluralize = pluralize.bind( this );
 
 			return this;
 		},
@@ -14,6 +14,27 @@
 
 		pluralize = function( number ) {
 			var type, variants_arr, variants_hash, mod10, mod100;
+
+			if ( isArray( number ) ) {
+				var result = [],
+					variants = [].slice.call( arguments, 1 )[ 0 ],
+					i = 0,
+					l = number.length;
+
+				// Is array empty? (simple check)
+				if ( l === 0 ) {
+					return "";
+				}
+
+				for ( ; i < l; i++ ) {
+					var newArguments = [ variants ];
+					newArguments.unshift( number[ i ] )
+
+					result.push( this.pluralize.apply( this, newArguments ) );
+				}
+
+				return result;
+			}
 
 			number = parseFloat( number );
 

@@ -9,7 +9,7 @@ new function () {
 		arr.forEach(function( item ) {
 			equal(
 				Russian.pluralize( parseFloat( item ), variants ), need,
-				"Russian.pluralize( " + item + ", [ '" + variants.join("', '") + "' ]) => " + need);
+				"Russian.pluralize( " + item + ", variants ) => " + need);
 		});
 	});
 
@@ -20,7 +20,7 @@ new function () {
 		arr.forEach(function( item ) {
 			equal(
 				Russian.pluralize( parseFloat( item ), variants ), need,
-				"Russian.pluralize( " + item + ", [ '" + variants.join("', '") + "' ]) => " + need);
+				"Russian.pluralize( " + item + ", variants ) => " + need);
 		});
 	});
 
@@ -31,7 +31,7 @@ new function () {
 		arr.forEach(function( item ) {
 			equal(
 				Russian.pluralize( parseFloat( item ), variants ), need,
-				"Russian.pluralize( " + item + ", [ '" + variants.join("', '") + " ]) => " + need);
+				"Russian.pluralize( " + item + ", variants ) => " + need);
 		});
 	});
 
@@ -42,7 +42,7 @@ new function () {
 		arr.forEach(function( item ) {
 			equal(
 				Russian.pluralize( item, variants ), need,
-				"Russian.pluralize( " + item + ", [ '" + variants.join("', '") + " ]) => " + need);
+				"Russian.pluralize( " + item + ", variants ) => " + need);
 		});
 	});
 
@@ -53,7 +53,7 @@ new function () {
 			var need = variants[ i ];
 			equal(
 				Russian.p( parseFloat( item ), variants ), need,
-				"Russian.p( " + item + ", [ '" + variants.join("', '") + "' ]) => " + need);
+				"Russian.p( " + item + ", variants ) => " + need);
 		});
 	});
 
@@ -64,7 +64,7 @@ new function () {
 			var need = variants[ i ];
 			equal(
 				Russian.pluralize( item, variants ), need,
-				"Russian.pluralize( " + item + ", '" + variants.join("', '") + "' ) => " + need);
+				"Russian.pluralize( " + item + ", variants ) => " + need);
 		});
 	});
 
@@ -78,8 +78,8 @@ new function () {
 			"Support string number");
 
 		equal(
-			Russian.pluralize( "00.3.00", variants ), variants[ 1 ],
-			"`\"00.3.00\"` first argument");
+			Russian.pluralize( "00.3.00", variants ), variants[ 3 ],
+			"`\"00.3.00\"` first argument converted to 0.3");
 
 		equal(
 			Russian.pluralize( 3.14 ), "",
@@ -116,5 +116,9 @@ new function () {
 		equal(
 			Russian.pluralize( { 1: "one" }, variants ), "",
 			"Object first argument return empty string");
+
+		equal(
+			Russian.pluralize( 2, [ 'вещь', 'вещи', 'вещей' ]), 'вещи',
+			"Russian.pluralize( 2, [ 'вещь', 'вещи', 'вещей' ]) - If you call pluralize with unknown array (not variable) second argument");
 	});
 };

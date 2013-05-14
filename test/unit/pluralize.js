@@ -47,7 +47,7 @@ new function () {
 	});
 
 	test( "Alias", function() {
-		var arr = [ 1, 3, 5 ];
+		var arr = [ 1, 3, 5, 1.35 ];
 
 		arr.forEach(function( item, i ) {
 			var need = variants[ i ];
@@ -58,7 +58,7 @@ new function () {
 	});
 
 	test( "Use some arguments, not array", function() {
-		var arr = [ 1, 3, 5 ];
+		var arr = [ 1, 3, 5, 1.35 ];
 
 		arr.forEach(function( item, i ) {
 			var vars = variants.slice( 0 ),

@@ -8,9 +8,11 @@
 			return obj && Object[ prototype ].toString.call( obj ) === "[object Array]";
 		},
 
-		extendBy = function( plugin ) {
+		extendBy = function( plugin, name ) {
 			var method,
 				newPlugin = new plugin();
+
+			Russian[ prototype ][ name ] = plugin;
 
 			for ( method in plugin[ prototype ] ) {
 				if ( plugin[ prototype ].hasOwnProperty( method ) ) {
@@ -79,7 +81,7 @@
 		return Pluralize;
 	}());
 
-	extendBy( Pluralize );
+	extendBy( Pluralize, "Pluralize" );
 
 	window.Russian = new Russian();
 

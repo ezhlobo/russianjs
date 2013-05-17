@@ -100,6 +100,61 @@ new function () {
 			"Advanced support arrays in arrays: [ [ [number], number ], [number], [number] ]");
 	});
 
+	test( "Create new Pluralize", function() {
+		var method,
+			arr1 = [], arr2 = [],
+			newPluralize = new Russian.Pluralize();
+
+		ok(
+			Russian.Pluralize,
+			"Pluralize class exist in Russian");
+
+		for ( method in Russian.Pluralize.prototype ) {
+			arr1.push( method );
+		}
+
+		for ( method in newPluralize ) {
+			arr2.push( method );
+		}
+
+		// `variants` created in constructor
+		arr1.unshift( "variants" );
+
+		deepEqual(
+			arr1, arr2,
+			"The same methods");
+
+		deepEqual(
+			newPluralize.pluralize([ 5, 1, 3, 5.13 ], variants ), Russian.p([ 5, 1, 3, 5.13 ], variants ),
+			"Methods return correct values");
+	});
+
+	test( "Create new Pluralize with variants", function() {
+		var method,
+			arr1 = [], arr2 = [],
+			needVars = [ "1", "3", "5", "other" ],
+			newPluralize = new Russian.Pluralize( needVars );
+
+		for ( method in Russian.Pluralize.prototype ) {
+			arr1.push( method );
+		}
+
+		for ( method in newPluralize ) {
+			arr2.push( method );
+		}
+
+		// `variants` created in constructor
+		arr1.unshift( "variants" );
+
+		deepEqual(
+			arr1, arr2,
+			"The same methods");
+
+		deepEqual(
+			newPluralize.pluralize([ 5, 1, 3, 5.13 ]), Russian.p([ 5, 1, 3, 5.13 ], needVars ),
+			"Methods return correct values");
+	});
+
 	test( "Funny tests", function() {
 		equal(
 			Russian.pluralize(), "",

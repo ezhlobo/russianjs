@@ -18,11 +18,6 @@ Each feature is a class and it can be used separately.
 
 It has alias: `Russian.p`.
 
-1. __number__<br>
-Type: Number or String<br>
-2. __variants__<br>
-Type: Array or Arguments
-
 ```js
 Russian.pluralize( 3, [ "вещь", "вещи", "вещей" ]) // => "вещи"
 ```
@@ -46,8 +41,9 @@ RussianPluralize.pluralize( 3, [ "вещь", "вещи", "вещей" ]) // => "
 
 If you use pluralize in all parts of code with one variants array, recommend declare variants at start:
 ```js
-var RussianPluralize = new Russian.Pluralize([ "вещь", "вещи", "вещей" ]);
-RussianPluralize.pluralize( 3 ) // => "вещи"
+var thingPluralize = new Russian.Pluralize([ "вещь", "вещи", "вещей" ]);
+thingPluralize.pluralize( 3 ) // => "вещи"
+thingPluralize.pluralize( 1, [ "thing" ]) // => "thing"
 ```
 
 ## Contributions

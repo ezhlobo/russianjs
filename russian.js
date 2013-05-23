@@ -32,15 +32,16 @@
 			var type, variant, mod10, mod100;
 
 			if ( isArray( number ) ) {
-				var result = [],
-					variants = [].slice.call( arguments, 1 )[ 0 ],
-					i = 0,
-					l = number.length;
+				var l = number.length;
 
 				// Is array empty? (check length only)
 				if ( l === 0 ) {
 					return "";
 				}
+
+				var result = [],
+					variants = [].slice.call( arguments, 1 )[ 0 ],
+					i = 0;
 
 				for ( ; i < l; i++ ) {
 					var newArguments = [ variants ];
